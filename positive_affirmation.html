@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positive Affirmation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #F3EEE7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem 2.5rem;
+  }
+  .stage { width: 100%; max-width: 540px; }
+
+  /* ===== The 4:5 capture card — 1080 x 1350 ===== */
+  .post-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    container-type: inline-size;
+    background: #FDFBF8;
+    border: 1px solid #E8DFD0;
+    border-radius: 3cqw;
+    box-shadow: 0 12px 40px rgba(120, 100, 73, 0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 9cqw 8cqw;
+    overflow: hidden;
+  }
+  /* soft corner accents */
+  .post-card::before,
+  .post-card::after {
+    content: "";
+    position: absolute;
+    width: 14cqw; height: 14cqw;
+    border: 1px solid #E3D8C6;
+  }
+  .post-card::before { top: 5cqw; left: 5cqw; border-right: none; border-bottom: none; border-radius: 2cqw 0 0 0; }
+  .post-card::after  { bottom: 5cqw; right: 5cqw; border-left: none; border-top: none; border-radius: 0 0 2cqw 0; }
+
+  .brand {
+    font-size: 1.9cqw;
+    color: #C4B9AA;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 8cqw;
+  }
+  .dateline-outer {
+    text-align: center;
+    font-size: 12px;
+    color: #A89680;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+  .emoji {
+    font-size: 8cqw;
+    line-height: 1;
+    margin-bottom: 3.5cqw;
+  }
+  .word {
+    font-size: 12cqw;
+    font-weight: 400;
+    color: #3A2E24;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    margin-bottom: 4.5cqw;
+  }
+  .meaning {
+    font-size: 2.9cqw;
+    color: #7A6E65;
+    line-height: 1.7;
+    max-width: 82%;
+    margin: 0 auto 6cqw;
+  }
+  .divider {
+    width: 8cqw;
+    height: 1px;
+    background: #DFD3C2;
+    margin: 0 auto 6cqw;
+  }
+  .mantra {
+    font-size: 3.1cqw;
+    color: #8B7355;
+    line-height: 1.65;
+    font-style: italic;
+    max-width: 84%;
+  }
+  .footer-mark {
+    position: absolute;
+    bottom: 6cqw;
+    left: 0; right: 0;
+    font-size: 1.8cqw;
+    color: #CBC0B1;
+    letter-spacing: 0.2em;
+  }
+
+  /* ===== Controls — OUTSIDE the capture frame ===== */
+  .hint {
+    text-align: center;
+    font-size: 12px;
+    color: #A89680;
+    letter-spacing: 0.04em;
+    margin: 1.1rem 0 1rem;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .pill-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 22px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    background: #fff;
+    color: #8B7355;
+    border: 1px solid #E8DFD0;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .pill-btn:hover { background: #FAF7F2; }
+
+  .listen-card {
+    background: #F5F1EB;
+    border: 1px solid #E8DFD0;
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+  }
+  .listen-label {
+    font-size: 11px; color: #B0A898;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .listen-row { display: flex; align-items: center; gap: 12px; }
+  .play-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: #8B7355;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .play-btn:hover { opacity: 0.85; }
+  .play-btn span { color: #fff; font-size: 17px; margin-left: 2px; }
+  .video-info { flex: 1; min-width: 0; }
+  .video-title { font-size: 13px; font-weight: 500; color: #3A2E24; margin-bottom: 2px; }
+  .video-sub { font-size: 12px; color: #B0A898; }
+  .vibe-btn {
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    background: transparent;
+    color: #A89680;
+    border: 1px solid #E8DFD0;
+    font-family: inherit;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .vibe-btn:hover { background: #FAF7F2; }
+  .yt-link {
+    display: block; text-align: center;
+    margin-top: 0.9rem;
+    font-size: 12px; color: #8B7355;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .yt-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== CAPTURE THIS CARD (1080 x 1350, 4:5) ===== -->
+  <p class="dateline-outer" id="dateline"></p>
+  <div class="post-card" id="postCard">
+    <p class="brand">🌿 Positive Affirmation</p>
+    <p class="emoji" id="emoji"></p>
+    <p class="word" id="word"></p>
+    <p class="meaning" id="meaning"></p>
+    <div class="divider"></div>
+    <p class="mantra" id="mantra"></p>
+    <p class="footer-mark">☁️ &nbsp; BREATHE IN · BEGIN GENTLY &nbsp; ☁️</p>
+  </div>
+
+  <p class="hint">📸 screenshot the card above to post · tap below to change</p>
+
+  <div class="controls">
+    <button class="pill-btn" onclick="drawAgain()">✦ draw again</button>
+  </div>
+
+  <!-- ===== Listen (not captured) ===== -->
+  <div class="listen-card">
+    <p class="listen-label">🎧 today's listen</p>
+    <div class="listen-row">
+      <a class="play-btn" id="play" href="#" target="_blank" rel="noopener noreferrer" aria-label="Play affirmation audio">
+        <span>▶</span>
+      </a>
+      <div class="video-info">
+        <p class="video-title" id="vtitle"></p>
+        <p class="video-sub" id="vsub"></p>
+      </div>
+      <button class="vibe-btn" onclick="newVibe()">↻ new vibe</button>
+    </div>
+    <a class="yt-link" id="ytlink" href="#" target="_blank" rel="noopener noreferrer">open in YouTube ↗</a>
+  </div>
+
+</div>
+
+<script>
+const affirmations = [
+  { emoji: "🌊", word: "Stillness", meaning: "Your mind doesn't need to be empty — just undisturbed. Today, return to stillness between thoughts.", mantra: "I am the sky. Thoughts are clouds passing through." },
+  { emoji: "🌱", word: "Grounded", meaning: "Strength comes from roots. No matter what today brings, you stand on solid ground.", mantra: "My feet meet the earth. I am steady and present." },
+  { emoji: "🤍", word: "Enough", meaning: "Not as settling — as truth. You are already complete. Today you add, you don't fix.", mantra: "I am enough, exactly as I am right now." },
+  { emoji: "💧", word: "Clarity", meaning: "When the water is still, you can see the bottom. Clarity isn't forced — it arrives.", mantra: "I release what clouds me. My next step is clear." },
+  { emoji: "🌅", word: "Expansion", meaning: "Growth happens at the edge of comfort. Today, choose the slightly harder path.", mantra: "I expand beyond yesterday's limits, gently and boldly." },
+  { emoji: "🕊️", word: "Presence", meaning: "The only place where life actually happens. Today, let full attention be your greatest gift.", mantra: "I am here. Fully. This moment is where I live." },
+  { emoji: "🔥", word: "Discipline", meaning: "Not punishment — devotion. Discipline is love made visible through action.", mantra: "I honour my commitments. My consistency builds my life." },
+  { emoji: "🌳", word: "Resilience", meaning: "You've already survived 100% of your hard days. Today is no different.", mantra: "I bend, I adapt, I rise. My strength compounds." },
+  { emoji: "🌾", word: "Abundance", meaning: "Not just money — time, energy, love, options. Start by noticing what's already full.", mantra: "I live in abundance. More flows to me every day." },
+  { emoji: "🦁", word: "Courage", meaning: "Not the absence of fear — action taken through it. One brave step unlocks the next.", mantra: "I choose courage over comfort. I move forward anyway." },
+  { emoji: "🍃", word: "Flow", meaning: "Effort without force. Today, work with what's easy and trust the current.", mantra: "I release resistance. I move with ease and purpose." },
+  { emoji: "🧭", word: "Trust", meaning: "Trust yourself first — your instincts, your timing, your process.", mantra: "I trust my path. I trust my pace. I trust myself." },
+  { emoji: "🎯", word: "Intention", meaning: "The difference between drifting and directing. What you intend, you create.", mantra: "Everything I do today is intentional and purposeful." },
+  { emoji: "☀️", word: "Vitality", meaning: "Alive in the fullest sense — energy in the body, fire in the mind.", mantra: "I am alive, energised, and fully inhabiting this body." },
+  { emoji: "🍂", word: "Surrender", meaning: "Not giving up — releasing the grip. Some things unfold better when you stop forcing.", mantra: "I do my part, then release the outcome with grace." },
+];
+
+const videos = [
+  { title: "I Am Affirmations", sub: "Confidence reset · ~10 min", url: "https://youtu.be/efZFARmGyMs" },
+  { title: "Best Morning Affirmations", sub: "10 minutes to a perfect day", url: "https://www.youtube.com/watch?v=K401m8DYF3U" },
+  { title: "Morning Positive Affirmations", sub: "Guided meditation · 10 min", url: "https://www.youtube.com/watch?v=2l8WD4U4KMk" },
+  { title: "10-Minute Morning Affirmations", sub: "Listen every morning", url: "https://www.youtube.com/watch?v=4afYTluQITg" },
+  { title: "Powerful Positive Morning Affirmations", sub: "Lavendaire · self love & gratitude", url: "https://www.youtube.com/watch?v=uT6ASPy2Dbs" },
+  { title: "Positive Morning Affirmations", sub: "Start the day right", url: "https://www.youtube.com/watch?v=sfZoD1DREY0" },
+  { title: "Morning Meditation with Affirmations", sub: "For an empowering day", url: "https://www.youtube.com/watch?v=2DwBTGPlmA0" },
+  { title: "I AM Affirmations Meditation", sub: "Guided morning · 15 min", url: "https://www.youtube.com/watch?v=vyK8DDlEEmw" },
+  { title: "I Am — Positive Self-Talk", sub: "Personal growth journey", url: "https://www.youtube.com/watch?v=b1BivnnidMU" },
+];
+
+let affIdx, vidIdx;
+
+function seedIndex(len) {
+  const d = new Date();
+  const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  return seed % len;
+}
+function randomIndex(len, avoid) {
+  let next = Math.floor(Math.random() * len);
+  if (next === avoid) next = (next + 1) % len;
+  return next;
+}
+function renderWord() {
+  const a = affirmations[affIdx];
+  document.getElementById("emoji").textContent = a.emoji;
+  document.getElementById("word").textContent = a.word;
+  document.getElementById("meaning").textContent = a.meaning;
+  document.getElementById("mantra").textContent = '“' + a.mantra + '”';
+}
+function renderVideo() {
+  const v = videos[vidIdx];
+  document.getElementById("vtitle").textContent = v.title;
+  document.getElementById("vsub").textContent = v.sub;
+  document.getElementById("play").href = v.url;
+  document.getElementById("ytlink").href = v.url;
+}
+function drawAgain() { affIdx = randomIndex(affirmations.length, affIdx); renderWord(); }
+function newVibe() { vidIdx = randomIndex(videos.length, vidIdx); renderVideo(); }
+
+function init() {
+  const d = new Date();
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("dateline").textContent =
+    days[d.getDay()] + " · " + months[d.getMonth()] + " " + d.getDate();
+  affIdx = seedIndex(affirmations.length);
+  vidIdx = Math.floor(Math.random() * videos.length);
+  renderWord();
+  renderVideo();
+}
+init();
+</script>
+</body>
+</html>
